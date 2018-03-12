@@ -1,0 +1,461 @@
+procedure InitWriteCode;                    {debug}
+
+{ initialize the intermediate code opcode table                 }
+
+begin {InitWriteCode}
+opt[pc_adi] := 'adi';
+opt[pc_adr] := 'adr';
+opt[pc_and] := 'and';
+opt[pc_dvi] := 'dvi';
+opt[pc_dvr] := 'dvr';
+opt[pc_cnn] := 'cnn';
+opt[pc_cnv] := 'cnv';
+opt[pc_ior] := 'ior';
+opt[pc_mod] := 'mod';
+opt[pc_mpi] := 'mpi';
+opt[pc_mpr] := 'mpr';
+opt[pc_ngi] := 'ngi';
+opt[pc_ngr] := 'ngr';
+opt[pc_not] := 'not';
+opt[pc_sbi] := 'sbi';
+opt[pc_sbr] := 'sbr';
+opt[pc_sto] := 'sto';
+opt[pc_dec] := 'dec';
+opt[dc_LOC] := 'LOC';
+opt[dc_FUN] := 'FUN';
+opt[pc_ent] := 'ent';
+opt[pc_fjp] := 'fjp';
+opt[pc_inc] := 'inc';
+opt[pc_ind] := 'ind';
+opt[pc_ixa] := 'ixa';
+opt[pc_lao] := 'lao';
+opt[pc_lca] := 'lca';
+opt[pc_ldo] := 'ldo';
+opt[pc_mov] := 'mov';
+opt[pc_ret] := 'ret';
+opt[pc_sro] := 'sro';
+opt[pc_xjp] := 'xjp';
+opt[pc_cup] := 'cup';
+opt[pc_equ] := 'equ';
+opt[pc_geq] := 'geq';
+opt[pc_grt] := 'grt';
+opt[pc_lda] := 'lda';
+opt[pc_ldc] := 'ldc';
+opt[pc_leq] := 'leq';
+opt[pc_les] := 'les';
+opt[pc_lod] := 'lod';
+opt[pc_neq] := 'neq';
+opt[pc_str] := 'str';
+opt[pc_ujp] := 'ujp';
+opt[pc_add] := 'add';
+opt[pc_lnm] := 'lnm';
+opt[pc_nam] := 'nam';
+opt[pc_cui] := 'cui';
+opt[pc_cum] := 'cum';
+opt[pc_tjp] := 'tjp';
+opt[dc_LAB] := 'LAB';
+opt[pc_usr] := 'usr';
+opt[pc_umi] := 'umi';
+opt[pc_udi] := 'udi';
+opt[pc_lla] := 'lla';
+opt[pc_lsl] := 'lsl';
+opt[pc_lad] := 'lad';
+opt[pc_uim] := 'uim';
+opt[dc_ENP] := 'ENP';
+opt[pc_stk] := 'stk';
+opt[dc_GLB] := 'GLB';
+opt[dc_DST] := 'DST';
+opt[dc_STR] := 'STR';
+opt[pc_cop] := 'cop';
+opt[pc_cpo] := 'cpo';
+opt[pc_tl1] := 'tl1';
+opt[pc_tl2] := 'tl2';
+opt[pc_vct] := 'vct';
+opt[dc_PIN] := 'PIN';
+opt[pc_shl] := 'shl';
+opt[pc_shr] := 'shr';
+opt[pc_bnd] := 'bnd';
+opt[pc_bor] := 'bor';
+opt[pc_bxr] := 'bxr';
+opt[pc_bnt] := 'bnt';
+opt[pc_bnl] := 'bnl';
+opt[pc_mpl] := 'mpl';
+opt[pc_dvl] := 'dvl';
+opt[pc_mdl] := 'mdl';
+opt[pc_sll] := 'sll';
+opt[pc_slr] := 'slr';
+opt[pc_bal] := 'bal';
+opt[pc_ngl] := 'ngl';
+opt[pc_adl] := 'adl';
+opt[pc_sbl] := 'sbl';
+opt[pc_blr] := 'blr';
+opt[pc_blx] := 'blx';
+opt[pc_siz] := 'siz';
+opt[dc_SYM] := 'SYM';
+opt[pc_lnd] := 'lnd';
+opt[pc_lor] := 'lor';
+opt[pc_vsr] := 'vsr';
+opt[pc_uml] := 'uml';
+opt[pc_udl] := 'udl';
+opt[pc_ulm] := 'ulm';
+opt[pc_pds] := 'pds';
+opt[dc_cns] := 'cns';
+opt[dc_PRM] := 'PRM';
+opt[pc_bno] := 'bno';
+opt[pc_nop] := 'nop';
+opt[pc_csp] := 'csp';
+opt[pc_chk] := 'chk';
+opt[pc_abi] := 'abi';
+opt[pc_abr] := 'abr';
+opt[pc_abl] := 'abl';
+opt[pc_sqi] := 'sqi';
+opt[pc_sql] := 'sql';
+opt[pc_sqr] := 'sqr';
+opt[pc_rnd] := 'rnd';
+opt[pc_rn4] := 'rn4';
+opt[pc_odd] := 'odd';
+opt[pc_odl] := 'odl';
+opt[pc_at2] := 'at2';
+opt[pc_sgs] := 'sgs';
+opt[pc_uni] := 'uni';
+opt[pc_pwr] := 'pwr';
+opt[pc_int] := 'int';
+opt[pc_dif] := 'dif';
+opt[pc_inn] := 'inn';
+opt[pc_prs] := 'prs';
+opt[pc_fix] := 'fix';
+opt[pc_sin] := 'sin';
+opt[pc_cos] := 'cos';
+opt[pc_exp] := 'exp';
+opt[pc_sqt] := 'sqt';
+opt[pc_log] := 'log';
+opt[pc_atn] := 'atn';
+opt[pc_tan] := 'tan';
+opt[pc_acs] := 'acs';
+opt[pc_asn] := 'asn';
+end; {InitWriteCode}
+
+
+procedure PrintDAG (tag: pStringPtr; code: icptr);
+
+{ print a DAG							}
+{								}
+{ parameters:							}
+{    tag - label for lines					}
+{    code - first node in DAG					}
+
+begin {PrintDAG}
+while code <> nil do begin
+   PrintDAG(tag, code^.left);
+   PrintDAG(tag, code^.right);
+   write(tag^);
+   WriteCode(code);
+   code := code^.next;
+   end; {while}
+end; {PrintDAG}
+
+
+procedure PrintBlocks {tag: pStringPtr; bp: blockPtr}; {debug}
+
+{ print a series of basic blocks				}
+{								}
+{ parameters:							}
+{    tag - label for lines					}
+{    bp - first block to print					}
+
+
+   procedure PrintDOM (dp: blockListPtr);
+
+   { print a list of dominators					}
+   {								}
+   { parameters:						}
+   {    dp - list to print					}
+
+   begin {PrintDOM}
+   while dp <> nil do begin
+      write(dp^.dfn:1);
+      if dp^.next <> nil then
+         write(',');
+      dp := dp^.next;
+      end; {while}
+   end; {PrintDOM}
+
+
+   procedure PrintList (tag: pStringPtr; lp: iclist);
+
+   { print an operation list					}
+   {								}
+   { parameters:						}
+   {    tag - label for lines					}
+   {    lp - list to print					}
+
+
+      procedure PrintTree (tag: pStringPtr; op: icptr);
+
+      { print an operation tree					}
+      {								}
+      { parameters:						}
+      {    tag - label for lines				}
+      {    op - operation tree to print				}
+
+      begin {PrintTree}
+      if op^.left <> nil then
+         printTree(@'>>    : ', op^.left);
+      if op^.right <> nil then
+         printTree(@'>>    : ', op^.right);
+      write(tag^);
+      WriteCode(op);
+      end; {PrintTree}
+
+
+   begin {PrintList}
+   while lp <> nil do begin
+      PrintTree(tag, lp^.op);
+      lp := lp^.next;
+      end; {while}
+   end; {PrintList}
+
+
+begin {PrintBlocks}
+while bp <> nil do begin
+   write(tag^, 'BLOCK(', bp^.dfn:1, ')  [');
+   PrintDOM(bp^.dom);
+   writeln(']');
+   PrintList(@'>>In  : ', bp^.c_in);
+   PrintList(@'>>Out : ', bp^.c_out);
+   PrintList(@'>>Gen : ', bp^.c_gen);
+   PrintDAG(tag, bp^.code);
+   bp := bp^.next;
+   end; {while}
+end; {PrintBlocks}
+
+
+procedure WriteCode {code: icptr};      {debug}
+
+{ print an intermediate code instruction                        }
+{                                                               }
+{ Parameters:                                                   }
+{    code - intermediate code instruction to write              }
+
+var
+   bit: 0..7;				{set constant bit}
+   i: integer;                          {work variable}
+   mask: unsigned;			{set constant mask}
+   start: boolean;			{has a set constant been started?}
+   ss, sv: setlow..sethigh;		{set values}
+
+
+   procedure WriteType(tp: baseTypeEnum);
+
+   { print the operand type                                     }
+   {                                                            }
+   { parameters:                                                }
+   {    tp - type                                               }
+
+   begin {WriteType}
+   case tp of
+      cgByte:   write('b');
+      cgUByte:  write('ub');
+      cgWord:   write('i');
+      cgUWord:  write('u');
+      cgLong:   write('l');
+      cgULong:  write('ul');
+      cgReal:   write('r');
+      cgDouble: write('d');
+      cgComp:   write('c');
+      cgExtended: write('e');
+      cgString: write('s');
+      cgVoid:   write('void');
+      cgSet:    write('x');
+      otherwise: write('(', ord(tp):1, ')');
+      end; {case}
+   end; {WriteType}
+
+
+begin {WriteCode}
+write(opt[code^.opcode]);
+with code^ do
+   case opcode of
+      dc_enp, dc_pin, dc_sym, pc_abi, pc_abl, pc_abr, pc_acs, pc_adi, pc_adl,
+      pc_adr,
+      pc_and, pc_asn, pc_atn, pc_at2, pc_bal, pc_blr, pc_blx, pc_bnt, pc_bor,
+      pc_bnd, pc_bnl, pc_bxr, pc_cos, pc_dif, pc_dvi, pc_dvl, pc_dvr,
+      pc_ent, pc_exp, pc_inn, pc_int, pc_ior, pc_log, pc_mdl,
+      pc_mod, pc_mpi, pc_mpl, pc_mpr, pc_ngi, pc_ngl,
+      pc_ngr, pc_not, pc_nop, pc_odd, pc_odl, pc_rnd, pc_rn4, pc_prs,
+      pc_pwr, pc_sbi, pc_sbl, pc_sbr, pc_sgs, pc_shl, pc_shr,
+      pc_sin, pc_sll, pc_slr, pc_sqi, pc_sql, pc_sqr, pc_sqt,
+      pc_tan, pc_udi, pc_udl, pc_uim, pc_ulm, pc_umi, pc_uml, pc_uni,
+      pc_usr, pc_vsr: ;
+
+      dc_dst, pc_add, pc_csp, pc_fjp, pc_lla, pc_lsl, pc_pds, pc_siz, pc_tjp,
+      pc_xjp:
+         write('  ', q:1);
+      
+      dc_lab, pc_ujp:
+         if lab = nil then
+            write('  ', q:1)
+         else
+            write('  ', lab^);
+      
+      pc_bno, pc_ret, pc_stk, pc_sto, pc_ixa:
+         WriteType(optype);
+
+      pc_equ, pc_geq, pc_grt, pc_leq, pc_les, pc_neq: begin
+         WriteType(optype);
+         if optype = cgString then
+            write(' ', r:1, ',', q:1);
+         end;
+
+      pc_tl1, pc_tl2: begin
+         WriteType(optype);
+         write(' ', r:1, ',', q:1);
+         end;
+
+      pc_vct: begin
+         WriteType(optype);
+         write(' ', q:1, ',', lval:1);
+         end;
+
+      pc_chk: begin
+         WriteType(optype);
+         if optype in [cgByte,cgUByte,cgWord,cgUWord] then
+            write(' ', r:1, ',', q:1)
+         else if optype in [cgLong,cgULong] then
+            write(' ', lval:1, ',', lval2:1)
+         else
+            write(' ***');
+         end;
+
+      pc_nam:
+         write('  ', str^);
+
+      dc_fun, dc_loc, pc_lnm:
+         write('  ', r:1, ':', q:1);
+
+      pc_mov:
+         write('  ', (ord4(r)<<16) | ord4(q):1);
+
+      dc_prm:
+         write('  ', q:1, ':', r:1, ':', s:1);
+
+      pc_cnv,pc_cnn: begin
+         write('  ');
+         i := (q>>4) & 15;
+         WriteType(baseTypeEnum(i));
+         write(':');
+         i := q & 15;
+         WriteType(baseTypeEnum(i));
+         end;
+
+      pc_ldc: begin
+         WriteType(optype);
+         if optype in [cgByte,cgUByte,cgWord,cgUWord] then
+            write(' ', q:1)
+         else if optype in [cgLong,cgULong] then
+            write(' ', lval:1)
+         else if optype in [cgReal,cgDouble,cgComp,cgExtended] then
+            write(' ', rval:1)
+         else if optype = cgSet then begin
+            write(' [');
+            ss := -1;
+            start := true;
+            for i := 1 to setp^.smax do begin
+               mask := $0001;
+               for bit := 0 to 7 do begin
+                  sv := (i-1)*8 + bit;
+                  if (ord(setp^.sval[i]) & mask) <> 0 then begin
+                     if ss = -1 then
+                        ss := sv;
+                     end {if}
+                  else if ss <> -1 then begin
+                     sv := sv-1;
+                     if not start then
+                        write(',');
+                     start := false;
+                     write(ss:1);
+                     if ss <> sv then
+                        write('..', sv:1);
+                     ss := -1;
+                     end; {else}
+                  mask := mask << 1;
+                  end; {for}
+               end; {for}
+            write(']');
+            end {else if}
+         else
+            write('***');
+         end;
+
+      pc_cui, pc_dec, pc_fix, pc_inc, pc_ind: begin
+         WriteType(optype);
+         write(' ', q:1);
+         end;
+
+      pc_cum: begin
+         WriteType(optype);
+         write(' ', lval:1);
+         end;
+
+      pc_lao:
+         write(' ', q:1, ':', lab^);
+
+      pc_ldo, pc_sro: begin
+         WriteType(optype);
+         write(' ', q:1, ':', lab^);
+         end;
+
+      pc_lad:
+         write('  ', lab^);
+
+      pc_lod, pc_str: begin
+         WriteType(optype);
+         write(' ', r:1, '+', q:1, ':', p:1);
+         end;
+
+      pc_lda:
+         write('  ', s:1, '+', q:1, ':', p:1);
+
+      dc_glb, dc_str:         
+         write(' ', r:1, ':', q:1, ':', lab^);
+
+      pc_cup: begin        
+         WriteType(optype);
+         if lab = nil then
+            write(' ', r:1, ':', q:1)
+         else
+            write(' ', q:1, ':', lab^);
+         end;
+
+      dc_cns: begin
+         WriteType(optype);
+         write(' ', q:1, ':');
+         case optype of
+            cgByte,cgUByte,cgWord,cgUWord:
+               write(r:1);
+            cgLong,cgULong:
+               write(lval:1);
+            cgReal,cgDouble,cgComp,cgExtended:
+               write('***');
+            cgString:
+               write('''', str^, '''');
+            otherwise:
+               write('***');
+            end; {case}
+         end;
+
+      pc_lca: begin
+         WriteType(optype);
+         write(' ');
+         if optype = cgString then
+            write('''', str^, '''')
+         else
+            write('***');
+         end;
+
+      otherwise:
+         write('  ***');
+
+      end; {case}
+writeln;
+end; {WriteCode}

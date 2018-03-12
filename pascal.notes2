@@ -1,0 +1,2 @@
+1. The last parameter in StringToText (MscToolSet) has been changed from var
+cString to gsosOutStringPtr.

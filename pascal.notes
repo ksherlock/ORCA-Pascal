@@ -1,7 +1,9 @@
-ORCA/Pascal 2.2
-Copyright 1996, Byte Works Inc.
+ORCA/Pascal 2.2.1 B1
+Copyright 1997, Byte Works Inc.
 
 -- Change List --------------------------------------------------------------
+
+2.2.1	    1.	Bugs fixed; see notes, below.
 
 2.2	    1.	Bugs fixed; see notes, below.
 
@@ -81,6 +83,10 @@ In addition, ORCA/Pascal supports several extended characters as shortcuts for m
 	$D6		division (- with dots)	div
 
 Finally, the non-breaking space, sometimes called the sticky space (ordinal value $CA), is treated exactly like a standard space character.
+
+-- Bugs from Pascal 2.2 that are fixed in Pascal 2.2.1 ----------------------
+
+1. The interface file Common.pas reserved 10 bytes of space for the label reserved3 in the variant part for the line edit control.  This has been changed to 16.
 
 -- Bugs from Pascal 2.1 that are fixed in Pascal 2.2 ------------------------
 
